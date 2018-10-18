@@ -43,15 +43,18 @@ export default class Calculator extends Component {
           value={input}
           onChange={this.handleChange}
         />
-        in
+        <br />
+        Исходная валюта
         <select name="inCurrent" value={inCurrent} onChange={this.handleChange}>
           {list}
         </select>
-        to
+        <br />
+        Валюта назначения
         <select name="toCurrent" value={toCurrent} onChange={this.handleChange}>
           {list}
         </select>
-        <button onClick={this.getValue}>Check</button>
+        <br />
+        <button onClick={this.getValue}>Посчитать</button>
         <p>{result}</p>
       </div>
     );

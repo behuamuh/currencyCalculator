@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import GetNewData from './GetNewData';
-import Calculator from './Calculator';
+import AppComponent from './AppComponent';
 
 const URL = 'https://www.cbr-xml-daily.ru/daily_json.js';
 
@@ -46,13 +45,7 @@ class App extends Component {
 
   render() {
     const { date, valute } = this.state;
-    return (
-      <div className="App">
-        <h1>Калькулятор валют</h1>
-        <GetNewData date={date} handleSubmit={this.getNewData} />
-        <Calculator currents={valute} />
-      </div>
-    );
+    return <AppComponent date={date} valute={valute} />;
   }
 }
 
