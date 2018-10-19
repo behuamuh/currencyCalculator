@@ -5,7 +5,13 @@ export default class GetNewData extends Component {
     const { date, handleSubmit } = this.props;
     return (
       <div>
-        <p>Данные актуальны на - {date}</p>
+        {date ? (
+          <p>Данные актуальны на - {date}</p>
+        ) : (
+          <p>
+            Если данные не появятся через несколько секунд, нажмите "Обновить"
+          </p>
+        )}
         <button onClick={handleSubmit}>Обновить</button>
       </div>
     );

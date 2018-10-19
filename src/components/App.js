@@ -1,52 +1,37 @@
 import React, { Component } from 'react';
-import './App.css';
-import AppComponent from './AppComponent';
+import { connect } from 'react-redux';
 
-const URL = 'https://www.cbr-xml-daily.ru/daily_json.js';
+import './App.css';
+
+import AppComponent from './AppComponent';
+import { getNewData } from '../actions';
 
 class App extends Component {
-  state = {
-    date: '',
-    valute: [],
-  };
-
-  getNewData = () => {
-    fetch(URL)
-      .then(responce => responce.json())
-      .then(data => {
-        const valutes = [];
-        for (let i in data.Valute) {
-          valutes.push(data.Valute[i]);
-        }
-        valutes.push({
-          ID: '1',
-          NumCode: '',
-          CharCode: 'RUB',
-          Nominal: 1,
-          Name: '',
-          Value: 1,
-          Previous: 1,
-        });
-        this.setState({
-          date: data.Date,
-          valute: valutes,
-        });
-      })
-      .catch(error => {
-        alert(`Не удалось обновить данные.
-        Попробуйте позже.
-        Ошибка - ${error}`);
-      });
-  };
-
   componentDidMount() {
-    this.getNewData();
+    this.props.getNewData();
   }
 
   render() {
-    const { date, valute } = this.state;
-    return <AppComponent date={date} valute={valute} />;
+    return <AppComponent {...this.props} />;
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    date: state.currencies.date,
+    valute: state.currencies.valute,
+    isloading: state.loading.isloading,
+    error: state.loading.error,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getNewData: () => dispatch(getNewData()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
